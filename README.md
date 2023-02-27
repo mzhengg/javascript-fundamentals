@@ -76,3 +76,28 @@ let answer = parseInt(prompt("Please enter the number you would like to FizzBuzz
 console.log(favoriteAnimal('Goat'))
 ```
 
+## Node.js
+
+Node.js is a JavaScript runtime environment that allows you to run JavaScript outside of your web browser.  
+
+We're going to install Node.js using nvm (Node Version Manager), because it makes it easy to change Node versions and upgrade Node. There is another tool called npm (Node Package Manager) that you will use later to install the various libraries and tools used in JavaScript environments.   
+
+Instructions for installation: https://www.theodinproject.com/lessons/foundations-installing-node-js  
+
+## Run Javascript Code
+
+```
+node file.js
+```
+
+## Arrays
+
+Similar to arrays in Python. It is a common practice to declare arrays with the const keyword. It does NOT define a constant array. It defines a constant reference to an array. Because of this, we can still change the elements of a constant array.  
+
+```
+const cars = ["Saab", "Volvo", "BMW"];
+```
+
+## Dictionaries
+
+Just like in Python.
