@@ -40,7 +40,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-// perform 5 iterations of one round for a game
+// perform 5 iterations of playRound
 function game() {
     let score = 0;
 
@@ -53,7 +53,7 @@ function game() {
             score += 1;
         }
     }
-    
+
     console.log("You won " + score + " out of 5 rounds");
 }
 
