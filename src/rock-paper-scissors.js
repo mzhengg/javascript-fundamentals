@@ -1,61 +1,123 @@
+// make global variables that keep track of the computer and player's score
+let computerScore = 0, playerScore = 0;
+
+// select the buttons (either rock, paper, or scissors)
+const buttons = document.querySelectorAll('button');
+
+// for each button, add an event listener that checks if the user clicked any of them
+buttons.forEach((button) => {
+    button.addEventListener('click', event => {
+        // when button is clicked, we have to create an event response
+
+        // first, check if anybody reached 5 points. If this is the case, that means the game has already ended
+        // you should do NOTHING
+        if (computerScore == 5 || playerScore == 5) {
+            return;
+        }
+
+        // otherwise, get the button id to determine the user's choice
+        let playerSelection = event.target.id;
+        // get the computer's choice 
+        let computerSelection = getComputerChoice();
+
+        // play the round to determine who won
+        playRound(playerSelection, computerSelection);
+
+        // checks if we have reached the end of the game. If we did, we will determine a winner!
+        determineWinner();
+    });
+});
+
 // randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’.
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3);
 
+    let action;
+
     switch (choice) {
         case 0:
-            return 'rock';
+            action = 'rock'
             break;
         case 1:
-            return 'paper';
+            action = 'paper'
             break;
         case 2:
-            return 'scissor';
+            action = 'scissor'
             break;
     }
+
+    // display the computer's choice in the HTML
+    document.getElementById("computer-choice").innerHTML = "The computer chose: " + action;
+
+    return action;
 }
 
 // simulate one round
 function playRound(playerSelection, computerSelection) {
     if (playerSelection.toLowerCase() == computerSelection) {
-        return 'You tied!'
+        // display the round's result as "tied game!" in HTML
+        document.getElementById("result").innerHTML = 'Tied game!';
     }
     else if (playerSelection.toLowerCase() == 'rock' && computerSelection == 'paper') {
-        return "You lose!"
-    }
+        computerScore++;
+        // display round's result in HTML
+        document.getElementById("result").innerHTML = 'You lose! Rock loses to Paper.';
+}
     else if (playerSelection.toLowerCase() == 'rock' && computerSelection == 'scissor') {
-        return "You win!"
+        playerScore++;
+        // display round's result in HTML
+        document.getElementById("result").innerHTML = 'You win! Rock beats Scissors.';
     }
     else if (playerSelection.toLowerCase() == 'paper' && computerSelection == 'rock') {
-        return "You win!"
+        playerScore++;
+        // display round's result in HTML
+        document.getElementById("result").innerHTML = 'You win! Paper beats Rock.';
     }
     else if (playerSelection.toLowerCase() == 'paper' && computerSelection == 'scissor') {
-        return "You lose!"
+        computerScore++;
+        // display round's result in HTML
+        document.getElementById("result").innerHTML = 'You lose! Paper loses to Scissors.';
     }
     else if (playerSelection.toLowerCase() == 'scissor' && computerSelection == 'rock') {
-        return "You lose!"
+        computerScore++;
+        // display round's result in HTML
+        document.getElementById("result").innerHTML = 'You lose! Scissors loses to Rock.';
     }
     else if (playerSelection.toLowerCase() == 'scissor' && computerSelection == 'paper') {
-        return "You win!"
-    }
-}
-
-// perform 5 iterations of playRound
-function game() {
-    let score = 0;
-
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('Enter rock, paper, or scissor');
-        const computerSelection = getComputerChoice();
-        result = playRound(playerSelection, computerSelection)
-        
-        if (result == "You win!") {
-            score += 1;
-        }
+        playerScore++;
+        // display round's result in HTML
+        document.getElementById("result").innerHTML = 'You win! Scissors beat Paper.';
     }
 
-    console.log("You won " + score + " out of 5 rounds");
+    // now that a round has been played, update the scoreboard
+    updateScoreboard();
 }
 
-// initiate the game
-game()
+// function that updates the scoreboard in HTML
+function updateScoreboard() {
+    // concatenate the player's score and the computer's score to the scoreboard
+    document.getElementById("scoreboard").innerHTML = playerScore + "     -     " + computerScore;
+}
+
+// function that determines the winner 
+function determineWinner() {
+    // first, go to the element with the weapon-choice id
+    const element = document.getElementById("weapon-choices-text");
+
+    // create a div with id "winner"
+    const winnerDiv = document.createElement('div');
+    winnerDiv.id = 'winner';
+
+    // if the player won, set the proper winnerDiv text
+    if (playerScore == 5) {
+        winnerDiv.textContent = 'Congratulations! You win!';
+    }
+
+    // if the computer won, set the proper winnerDiv text
+    else if (computerScore == 5) {
+        winnerDiv.textContent = 'Boooo! The computer wins!';
+    }
+
+    // place the winnerDiv after the weapon-choices-text element
+    element.after(winnerDiv);
+}
